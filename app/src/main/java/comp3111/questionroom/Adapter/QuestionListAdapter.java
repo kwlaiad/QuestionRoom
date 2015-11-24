@@ -34,6 +34,7 @@ public class QuestionListAdapter extends FirebaseRecyclerAdapter<Question, Quest
             echoView = (TextView) v.findViewById(R.id.echo);
             cateView = (TextView) v.findViewById(R.id.category);
         }
+
     }
 
     @Override

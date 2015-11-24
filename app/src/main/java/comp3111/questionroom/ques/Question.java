@@ -1,7 +1,11 @@
 package comp3111.questionroom.ques;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.parceler.Parcel;
 
@@ -9,7 +13,7 @@ import org.parceler.Parcel;
  * Created by User on 22/11/2015.
  */
 @Parcel(Parcel.Serialization.BEAN)
-public class Question {
+public class Question implements Serializable {
 
     /**
      * Must be synced with firebase JSON structure
@@ -60,7 +64,7 @@ public class Question {
             headLastChar = "";
 
         timestamp = new Date().getTime();
-        comments = new ArrayList<>();
+        comments = new ArrayList<Comment>();
     }
 
     /**

@@ -35,7 +35,6 @@ public class MainActivityFragment extends Fragment {
     private QuestionListAdapter mAdapter;
     private ArrayList<Question> mList;
     private ArrayList<String> mKeys;
-    private DBUtil dbutil;
     private View view;
     private RecyclerView mRecyclerView;
 
@@ -47,6 +46,22 @@ public class MainActivityFragment extends Fragment {
         setUpFirebase();
         createRecyclerView();
 
+        mRecyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int position) {
+                        ArrayList<String> keys = mAdapter.getKeys();
+                        String qKey = keys.get(position);
+                        String msg = mAdapter.getItem(position).getWholeMsg();
+                        Intent intent = new Intent(getActivity(), DetailQuesActivity.class);
+                        intent.putExtra("roomName", roomName);
+                        intent.putExtra("QuestionItem", qKey);
+                        intent.putExtra("qmsg", msg);
+                        startActivity(intent);
+                }
+            })
+        );
+
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_add);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,8 +71,6 @@ public class MainActivityFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
-        dbutil = new DBUtil(new DBHelper(getActivity()));
 
         return view;
     }
